@@ -1,5 +1,5 @@
 ---
-title: Clembench
+title: Multimodal Clembench
 emoji: 🏆
 colorFrom: yellow
 colorTo: green
