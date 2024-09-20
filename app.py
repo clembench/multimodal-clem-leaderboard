@@ -33,12 +33,9 @@ def restart_space():
 GITHUB UTILS
 """
 github_data = get_github_data()
-text_leaderboard = github_data["text"][0]  # Get the text-only leaderboard for its available latest version
 multimodal_leaderboard = github_data["multimodal"][0]  # Get multimodal leaderboard for its available latest version.
 
 # Show only First 4 columns for the leaderboards
-text_leaderboard = text_leaderboard.iloc[:, :4]
-print(f"Showing the following columns for the latest leaderboard: {text_leaderboard.columns}")
 multimodal_leaderboard = multimodal_leaderboard.iloc[:, :4]
 print(f"Showing the following columns for the multimodal leaderboard: {multimodal_leaderboard.columns}")
 
@@ -113,16 +110,6 @@ with hf_app:
         #######################       THIRD TAB - PLOTS - %PLAYED V/S QUALITY SCORE     #######################
         """
         with gr.TabItem("📈 Plots", elem_id="plots", id=2):
-            """
-            DropDown Select for Text/Multimodal Leaderboard
-            """
-            leaderboard_selection = gr.Dropdown(
-                choices=[TEXT_NAME, MULTIMODAL_NAME],
-                value=TEXT_NAME,
-                label="Select Leaderboard 🎖️🔽",
-                elem_id="value-select-0",
-                interactive=True
-            )
 
             """
             Accordion Groups to select individual models - Hidden by default
@@ -241,37 +228,7 @@ with hf_app:
                 [plot_output],
                 queue=True
             )
-            """
-            LEADERBOARD SELECT CHANGE ACTIONS
-            Update Checkbox Groups and Dummy DF based on the leaderboard selected
-            """
-            leaderboard_selection.change(
-                update_open_models,
-                [leaderboard_selection],
-                [open_models_selection],
-                queue=True
-            )
 
-            leaderboard_selection.change(
-                update_closed_models,
-                [leaderboard_selection],
-                [closed_models_selection],
-                queue=True
-            )
-
-            leaderboard_selection.change(
-                get_plot_df,
-                [leaderboard_selection],
-                [dummy_plot_df],
-                queue=True
-            )
-
-            ## Implement Feature - Reset Plot when Leaderboard selection changes
-            leaderboard_selection.change(
-                reset_show_all,
-                outputs=[show_all],
-                queue=True
-            )
 
             open_models_selection.change(
                 reset_show_all,
@@ -285,23 +242,6 @@ with hf_app:
                 queue=True
             )
 
-            leaderboard_selection.change(
-                reset_show_names,
-                outputs=[show_names],
-                queue=True
-            )
-
-            leaderboard_selection.change(
-                reset_show_legend,
-                outputs=[show_legend],
-                queue=True
-            )
-
-            leaderboard_selection.change(
-                reset_mobile_view,
-                outputs=[mobile_view],
-                queue=True
-            )
 
         """
         #######################       FOURTH TAB - VERSIONS AND DETAILS     #######################
