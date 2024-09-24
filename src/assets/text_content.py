@@ -11,7 +11,7 @@ INTRODUCTION_TEXT = """
 
 The CLEM Leaderboard aims to track, rank and evaluate current cLLMs (chat-optimized Large Language Models) with the suggested pronounciation “clems”. 
 
-The multimodal benchmark is described in [Two Giraffes in a Dirt Field: Using Game Play to Investigate Situation Modelling in Large Multimodal Models](https://arxiv.org/abs/2406.14035)
+The multimodal benchmark is described in [Using Game Play to Investigate Multimodal and Conversational Grounding in Large Multimodal Models](https://arxiv.org/abs/2406.14035)
 
 The original benchmarking approach for text-only models is described in [Clembench: Using Game Play to Evaluate Chat-Optimized Language Models as Conversational Agents](https://aclanthology.org/2023.emnlp-main.689.pdf).
 
