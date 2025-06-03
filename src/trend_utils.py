@@ -305,14 +305,7 @@ def get_plot(df: pd.DataFrame, start_date: str = '2023-06-01', end_date: str = '
         # Alternate <br> for benchmark ticks based on date difference (Eg. v1.6, v1.6.5 too close to each other for MM benchmark)
         benchmark_tick_texts = []
         for i in range(len(benchmark_tickvals)):
-            if i == 0:
                 benchmark_tick_texts.append(f"<br><br><b>{benchmark_ticks[benchmark_tickvals[i]]}</b>")
-            else:
-                date_diff = (benchmark_tickvals[i] - benchmark_tickvals[i - 1]).days
-                if date_diff <= 75:
-                    benchmark_tick_texts.append(f"<br><br><br><b>{benchmark_ticks[benchmark_tickvals[i]]}</b>")
-                else:
-                    benchmark_tick_texts.append(f"<br><br><b>{benchmark_ticks[benchmark_tickvals[i]]}</b>")
         fig.update_xaxes(
             tickvals=filtered_custom_tickvals + benchmark_tickvals,  # Use filtered_custom_tickvals
             ticktext=[f"{date.strftime('%b')}<br>{date.strftime('%y')}" for date in filtered_custom_tickvals] + 
@@ -368,6 +361,22 @@ def get_plot(df: pd.DataFrame, start_date: str = '2023-06-01', end_date: str = '
         print("Custom Seting the Width :")
         fig.update_layout(width=width)
 
+    if mobile_view:
+        # Fix plot dimensions for a cleaner view
+        fig.update_layout(
+            height=400,  # shorter plot for mobile
+            margin=dict(l=10, r=10, t=30, b=40),
+            font=dict(size=5),
+            legend=dict(font=dict(size=7),
+                        bgcolor='rgba(255,255,255,0.7)',  # semi-transparent white for mobile
+                        bordercolor='rgba(0,0,0,0.05)'),
+            xaxis=dict(tickfont=dict(size=7)),
+            yaxis=dict(tickfont=dict(size=7)),
+            title=dict(font=dict(size=13)),
+
+        )
+
+
     return fig
 
 def get_final_trend_plot(mobile_view: bool = False, custom_width: int = 0) -> go.Figure:
@@ -396,15 +405,10 @@ def get_final_trend_plot(mobile_view: bool = False, custom_width: int = 0) -> go
 
     if mobile_view:
         height = 450
-        width = 375
     else:
         height = 1000
-        width = None
 
-    if custom_width:
-        width = custom_width
-
-    plot_kwargs = {'height': height, 'width': width, 'open_dip': 0, 'comm_dip': 0,
+    plot_kwargs = {'height': height, 'width': custom_width, 'open_dip': 0, 'comm_dip': 0,
                    'mobile_view': mobile_view}
 
     benchmark_ticks = {}
